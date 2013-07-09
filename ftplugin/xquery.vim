@@ -19,7 +19,6 @@
 "     http://developer.marklogic.com/learn/4.1/api-reference
 "
 
-
 " Only do this when not done yet for this buffer
 if exists("b:did_ftplugin")
 "  finish
@@ -31,14 +30,14 @@ endif
 let b:did_ftplugin = 1
 
 " http://markmail.org/message/5vfzrb7ojvds5drx
-autocmd InsertEnter *.xqy,*.xql,*.xqe,*.xq set iskeyword+=-
-autocmd InsertLeave *.xqy,*.xql,*.xqe,*.xq set iskeyword-=-
+autocmd InsertEnter *.xqy,*.xql,*.xqe,*.xq,*.xqm set iskeyword+=-
+autocmd InsertLeave *.xqy,*.xql,*.xqe,*.xq,*.xqm set iskeyword-=-
 "imap <C-c> <ESC>   "Because <C-c> dosent trigger InsertLeave (see help) 
 inoremap <C-c> <C-c>:set isk-=-<cr>
 
 "12/1/2010  Because XQueryTag() does not trigger InsertLeave when you come back
 "           to the buffer you made the jump in via i_Ctrl-T or i_Ctrl-O or something
-autocmd BufEnter *.xqy,*.xql,*.xqe,*.xq set iskeyword-=-   
+autocmd BufEnter *.xqy,*.xql,*.xqe,*.xq,*.xqm set iskeyword-=-   
 
 if !exists("*xqueryft:XQueryTag")
     function! xqueryft:XQueryTag(is_tjump)
