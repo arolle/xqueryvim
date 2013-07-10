@@ -1,3 +1,5 @@
+This is the BaseX specific version of https://github.com/dlam26/xqueryvim
+
 __description__
 
 This plugin configures Vim to be a little more efficient at editing XQuery...!
@@ -12,7 +14,10 @@ ftplugin/xquery.vim:
 
 xquerycomplete.vim:
     -Completes W3C XQuery 'fn' functions, types and keywords.
-    -Also completes any MarkLogic functions I could find at...  http://developer.marklogic.com/pubs/4.1/apidocs/All.html
+    -Also completes any BaseX functions
+    (BaseX specific code for function completion may be generated
+    running the XQuery script `basex-fn2vim.xq` inside the 
+    BaseX Docu Project: https://github.com/arolle/basex-docu  )
 
         Examples:
 
@@ -38,7 +43,7 @@ xquerycomplete.vim:
 indent/xquery.vim:
     - Attempts to indent according to the 'XQuery Style Conventions' here:  http://xqdoc.org/xquery-style.html
 
-    - Typing out certain keywords (like for/let/where/order/return/else) will automatically indent to the correct location when typed out.
+    - Typing out certain keywords (like for/let/where/order/group/return/else) will automatically indent to the correct location when typed out.
 
     - It can recognize complex FLOWR expressions. For example in the example below,
       if in insert mode, hitting enter after the first line will immediately
