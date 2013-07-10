@@ -687,6 +687,7 @@ elseif namespace =~ 'sessions'
         \ "for", 
         \ "let", 
         \ "where", 
+        \ "group by",
         \ "order by", 
         \ "return", 
         \ "some", 
@@ -710,6 +711,7 @@ elseif namespace =~ 'sessions'
         \ "xquery version \"1.0-ml\";",
         \ "xquery version \"0.9-ml\";",
         \ "xquery version \"1.0\";",
+        \ "xquery version \"3.0\";",
         \ "xquery version"
         \ ]
     "}}}
