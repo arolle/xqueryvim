@@ -66,79 +66,48 @@ function! xquerycomplete#CompleteXQuery(findstart, base)
     
 """ START INSERT BaseX specific
 
-let library_modules_namespaces = ["admin", "archive", "client", "convert", "crypto", "db", "fetch", "file", "ft", "geo", "hash", "hof", "html", "http", "index", "inspect", "json", "map", "math", "out", "proc", "prof", "random", "repo", "sql", "stream", "unit", "validate", "xquery", "xslt", "zip", "request", "rest", "session", "sessions"]
 
+
+let library_modules_namespaces = ["admin", "archive", "bin", "client", "convert", "crypto", "csv", "db", "fetch", "file", "ft", "hash", "hof", "html", "http", "index", "inspect", "json", "map", "math", "out", "proc", "prof", "random", "repo", "sql", "stream", "unit", "validate", "xquery", "xslt", "zip", "geo", "request", "rest", "session", "sessions"]
 let admin_functions = ["users", "sessions", "logs"]
-
 let archive_functions = ["create", "entries", "options", "extract-text", "extract-binary", "update", "delete", "write"]
-
+let bin_functions = ["hex", "bin", "octal", "to-octets", "from-octets", "length", "part", "join", "insert-before", "pad-left", "pad-right", "find", "decode-string", "encode-string", "pack-double", "pack-float", "pack-integer", "unpack-double", "unpack-float", "unpack-integer", "unpack-unsigned-integer", "or", "xor", "and", "not", "shift"]
+let csv_functions = ["parse", "serialize"]
 let client_functions = ["connect", "execute", "info", "query", "close"]
-
-let convert_functions = ["binary-to-string", "string-to-base64", "string-to-hex", "bytes-to-base64", "binary-to-bytes", "integer-to-base", "integer-from-base", "integer-to-dateTime", "dateTime-to-integer", "integer-to-dayTime", "dayTime-to-integer"]
-
+let convert_functions = ["binary-to-string", "string-to-base64", "string-to-hex", "bytes-to-base64", "bytes-to-hex", "binary-to-bytes", "integer-to-base", "integer-from-base", "integer-to-dateTime", "dateTime-to-integer", "integer-to-dayTime", "dayTime-to-integer"]
 let crypto_functions = ["hmac", "encrypt", "decrypt", "generate-signature", "validate-signature"]
-
-let db_functions = ["system", "info", "list", "list-details", "backups", "event", "open", "open-pre", "open-id", "node-pre", "node-id", "retrieve", "export", "text", "text-range", "attribute", "attribute-range", "fulltext", "create", "drop", "add", "delete", "optimize", "rename", "replace", "store", "output", "flush", "name", "path", "exists", "is-raw", "is-xml", "content-type"]
-
+let db_functions = ["system", "info", "list", "list-details", "backups", "event", "open", "open-pre", "open-id", "node-pre", "node-id", "retrieve", "export", "text", "text-range", "attribute", "attribute-range", "create", "drop", "add", "delete", "optimize", "rename", "replace", "store", "output", "flush", "name", "path", "exists", "is-raw", "is-xml", "content-type"]
 let fetch_functions = ["text", "binary", "content-type"]
-
 let file_functions = ["list", "read-binary", "read-text", "read-text-lines", "create-dir", "create-temp-dir", "create-temp-file", "delete", "write", "write-binary", "write-text", "write-text-lines", "append", "append-binary", "append-text", "append-text-lines", "copy", "move", "exists", "is-dir", "is-file", "last-modified", "size", "base-name", "dir-name", "path-to-native", "resolve-path", "path-to-uri", "dir-separator", "path-separator", "line-separator", "temp-dir"]
-
-let ft_functions = ["search", "mark", "extract", "count", "score", "tokens", "tokenize"]
-
+let ft_functions = ["search", "contains", "mark", "extract", "count", "score", "tokens", "tokenize"]
 let geo_functions = ["dimension", "geometry-type", "srid", "envelope", "as-text", "as-binary", "is-simple", "boundary", "num-geometries", "geometry-n", "length", "num-points", "area", "centroid", "point-on-surface", "equals", "disjoint", "intersects", "touches", "crosses", "within", "contains", "overlaps", "relate", "distance", "buffer", "convex-hull", "intersection", "union", "difference", "sym-difference", "x", "y", "z", "start-point", "end-point", "is-closed", "is-ring", "point-n", "exterior-ring", "num-interior-ring", "interior-ring-n"]
-
 let html_functions = ["parser", "parse"]
-
 let http_functions = ["send-request"]
-
 let hash_functions = ["md5", "sha1", "sha256", "hash"]
-
 let fn_functions = ["for-each", "filter", "for-each-pair", "fold-left", "fold-right"]
-
 let hof_functions = ["id", "const", "fold-left1", "until", "top-k-by", "top-k-with"]
-
 let index_functions = ["facets", "texts", "attributes", "element-names", "attribute-names"]
-
-let inspect_functions = ["function", "context", "module", "xqdoc"]
-
-let json_functions = ["parse", "serialize", "serialize-ml", "parse-ml"]
-
-let map_functions = ["collation", "contains", "entry", "get", "keys", "new", "remove", "size"]
-
+let inspect_functions = ["functions", "function", "context", "module", "xqdoc"]
+let json_functions = ["parse", "serialize"]
+let map_functions = ["collation", "contains", "entry", "get", "keys", "new", "remove", "size", "serialize"]
 let math_functions = ["pi", "sqrt", "sin", "cos", "tan", "asin", "acos", "atan", "atan2", "pow", "exp", "log", "log10", "e", "sinh", "cosh", "tanh", "crc32"]
-
 let out_functions = ["nl()", "tab()", "format"]
-
 let proc_functions = ["system", "execute"]
-
 let prof_functions = ["time", "mem", "sleep", "human", "dump", "current-ms", "current-ns", "void"]
-
 let rest_functions = ["base-uri", "uri", "wadl"]
-
 let random_functions = ["double", "integer", "seeded-double", "seeded-integer", "gaussian", "uuid"]
-
 let repo_functions = ["install", "delete", "list"]
-
-let request_functions = ["method", "scheme", "hostname", "port", "path", "query", "uri", "address", "remote-hostname", "remote-address", "remote-port", "parameter-names", "parameter", "header-names", "header", "cookie-names", "cookie"]
-
+let request_functions = ["method", "attribute", "scheme", "hostname", "port", "path", "query", "uri", "context-path", "address", "remote-hostname", "remote-address", "remote-port", "parameter-names", "parameter", "header-names", "header", "cookie-names", "cookie"]
 let sql_functions = ["init", "connect", "execute", "execute-prepared", "prepare", "commit", "rollback", "close"]
-
 let session_functions = ["id", "created", "accessed", "names", "get", "set", "delete", "close"]
-
 let sessions_functions = ["ids", "created", "accessed", "names", "get", "set", "delete", "close"]
-
 let stream_functions = ["materialize", "is-streamable"]
-
-let unit_functions = ["assert", "fail", "test", "test-libraries"]
-
+let unit_functions = ["assert", "fail", "test", "test-uris"]
 let validate_functions = ["xsd", "xsd-info", "dtd", "dtd-info"]
-
 let xquery_functions = ["eval", "invoke", "type"]
-
 let xslt_functions = ["processor", "version", "transform", "transform-text"]
-
 let zip_functions = ["binary-entry", "text-entry", "xml-entry", "html-entry", "entries", "zip-file", "update-entries"]
+
 
 "" END INSERT BaseX variables
 
@@ -534,149 +503,125 @@ let zip_functions = ["binary-entry", "text-entry", "xml-entry", "html-entry", "e
     elseif namespace =~ 'xs'
       let function_completions = atomic_types
 
-""" start insert from *.xq
+""" start insert from *.xq BaseX 
+   
+
 
 elseif namespace =~ 'admin'
 	call map(admin_functions, '"admin:" . v:val . "("')
 	let function_completions = copy(admin_functions)
-
 elseif namespace =~ 'archive'
 	call map(archive_functions, '"archive:" . v:val . "("')
 	let function_completions = copy(archive_functions)
-
+elseif namespace =~ 'bin'
+	call map(bin_functions, '"bin:" . v:val . "("')
+	let function_completions = copy(bin_functions)
 elseif namespace =~ 'client'
 	call map(client_functions, '"client:" . v:val . "("')
 	let function_completions = copy(client_functions)
-
 elseif namespace =~ 'convert'
 	call map(convert_functions, '"convert:" . v:val . "("')
 	let function_completions = copy(convert_functions)
-
 elseif namespace =~ 'crypto'
 	call map(crypto_functions, '"crypto:" . v:val . "("')
 	let function_completions = copy(crypto_functions)
-
+elseif namespace =~ 'csv'
+	call map(csv_functions, '"csv:" . v:val . "("')
+	let function_completions = copy(csv_functions)
 elseif namespace =~ 'db'
 	call map(db_functions, '"db:" . v:val . "("')
 	let function_completions = copy(db_functions)
-
 elseif namespace =~ 'fetch'
 	call map(fetch_functions, '"fetch:" . v:val . "("')
 	let function_completions = copy(fetch_functions)
-
 elseif namespace =~ 'file'
 	call map(file_functions, '"file:" . v:val . "("')
 	let function_completions = copy(file_functions)
-
 elseif namespace =~ 'ft'
 	call map(ft_functions, '"ft:" . v:val . "("')
 	let function_completions = copy(ft_functions)
-
-elseif namespace =~ 'geo'
-	call map(geo_functions, '"geo:" . v:val . "("')
-	let function_completions = copy(geo_functions)
-
 elseif namespace =~ 'hash'
 	call map(hash_functions, '"hash:" . v:val . "("')
 	let function_completions = copy(hash_functions)
-
 elseif namespace =~ 'hof'
 	call map(hof_functions, '"hof:" . v:val . "("')
 	let function_completions = copy(hof_functions)
-
 elseif namespace =~ 'html'
 	call map(html_functions, '"html:" . v:val . "("')
 	let function_completions = copy(html_functions)
-
 elseif namespace =~ 'http'
 	call map(http_functions, '"http:" . v:val . "("')
 	let function_completions = copy(http_functions)
-
 elseif namespace =~ 'index'
 	call map(index_functions, '"index:" . v:val . "("')
 	let function_completions = copy(index_functions)
-
 elseif namespace =~ 'inspect'
 	call map(inspect_functions, '"inspect:" . v:val . "("')
 	let function_completions = copy(inspect_functions)
-
 elseif namespace =~ 'json'
 	call map(json_functions, '"json:" . v:val . "("')
 	let function_completions = copy(json_functions)
-
 elseif namespace =~ 'map'
 	call map(map_functions, '"map:" . v:val . "("')
 	let function_completions = copy(map_functions)
-
 elseif namespace =~ 'math'
 	call map(math_functions, '"math:" . v:val . "("')
 	let function_completions = copy(math_functions)
-
 elseif namespace =~ 'out'
 	call map(out_functions, '"out:" . v:val . "("')
 	let function_completions = copy(out_functions)
-
 elseif namespace =~ 'proc'
 	call map(proc_functions, '"proc:" . v:val . "("')
 	let function_completions = copy(proc_functions)
-
 elseif namespace =~ 'prof'
 	call map(prof_functions, '"prof:" . v:val . "("')
 	let function_completions = copy(prof_functions)
-
 elseif namespace =~ 'random'
 	call map(random_functions, '"random:" . v:val . "("')
 	let function_completions = copy(random_functions)
-
 elseif namespace =~ 'repo'
 	call map(repo_functions, '"repo:" . v:val . "("')
 	let function_completions = copy(repo_functions)
-
 elseif namespace =~ 'sql'
 	call map(sql_functions, '"sql:" . v:val . "("')
 	let function_completions = copy(sql_functions)
-
 elseif namespace =~ 'stream'
 	call map(stream_functions, '"stream:" . v:val . "("')
 	let function_completions = copy(stream_functions)
-
 elseif namespace =~ 'unit'
 	call map(unit_functions, '"unit:" . v:val . "("')
 	let function_completions = copy(unit_functions)
-
 elseif namespace =~ 'validate'
 	call map(validate_functions, '"validate:" . v:val . "("')
 	let function_completions = copy(validate_functions)
-
 elseif namespace =~ 'xquery'
 	call map(xquery_functions, '"xquery:" . v:val . "("')
 	let function_completions = copy(xquery_functions)
-
 elseif namespace =~ 'xslt'
 	call map(xslt_functions, '"xslt:" . v:val . "("')
 	let function_completions = copy(xslt_functions)
-
 elseif namespace =~ 'zip'
 	call map(zip_functions, '"zip:" . v:val . "("')
 	let function_completions = copy(zip_functions)
-
+elseif namespace =~ 'geo'
+	call map(geo_functions, '"geo:" . v:val . "("')
+	let function_completions = copy(geo_functions)
 elseif namespace =~ 'request'
 	call map(request_functions, '"request:" . v:val . "("')
 	let function_completions = copy(request_functions)
-
 elseif namespace =~ 'rest'
 	call map(rest_functions, '"rest:" . v:val . "("')
 	let function_completions = copy(rest_functions)
-
 elseif namespace =~ 'session'
 	call map(session_functions, '"session:" . v:val . "("')
 	let function_completions = copy(session_functions)
-
 elseif namespace =~ 'sessions'
 	call map(sessions_functions, '"sessions:" . v:val . "("')
 	let function_completions = copy(sessions_functions)
-    
-""" end insert from *.xq
+
+
+
+""" end insert from *.xq BaseX
     endif
 
 
