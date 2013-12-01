@@ -53,4 +53,4 @@ return string-join((
     local:let-vimarray-from($ns[1] || "_functions",
       $parts[position() mod 2 = 0] (: removes $ns[1] from $parts :)
     )
-), "&#10;&#10;")
+), out:nl())
